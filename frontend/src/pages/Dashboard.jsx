@@ -78,17 +78,17 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#0b0b0c] text-gray-100">
-      <div className="px-6 pt-8 pb-2">
+      <div className="px-4 md:px-6 pt-17 md:pt-7 pb-2">
         <div className="flex items-end justify-between">
           <div>
-            <h1 className="text-xl sm:ml-10  font-semibold tracking-tight">Security Overview</h1>
-            <p className="sm:ml-10  text-sm text-gray-400">Passive scan insights across your monitored assets</p>
+            <h1 className="text-xl font-semibold tracking-tight">Security Overview</h1>
+  
           </div>
           <button className="text-sm px-3 py-2 rounded-md bg-[#1a1b20] border border-[#2a2b31] hover:bg-[#202127]" type="button" onClick={handleSaveAll}>Save All</button>
         </div>
       </div>
 
-      <div className="px-6 pt-5 grid gap-4 grid-cols-2 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="px-4 md:px-6 pt-5 grid gap-4 grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
         {stats.map((s, i) => (
           <div key={i} className="rounded-xl bg-[#111214] border border-[#1f1f22] p-4">
             <div className="text-xs uppercase text-gray-400">{s.label}</div>
@@ -97,7 +97,8 @@ const Dashboard = () => {
         ))}
       </div>
 
-      <div className="px-6 mt-6 grid grid-cols-12 gap-6">
+      <div className="px-4 md:px-6 mt-6 grid grid-cols-12 gap-6">
+        
         <div className="col-span-12 xl:col-span-8">
           <div className="rounded-xl overflow-hidden border border-[#1f1f22] bg-[#111214]">
             <div className="flex items-center justify-between px-4 py-3 border-b border-[#1f1f22]">
@@ -108,28 +109,32 @@ const Dashboard = () => {
             </div>
 
             <div className="grid grid-cols-6 sm:grid-cols-12 bg-[#0d0e12] text-xs text-gray-400 border-b border-[#1f1f22]">
-              <div className="col-span-6 sm:col-span-5 px-4 py-2">Target</div>
-              <div className="col-span-3 sm:col-span-2 px-4 py-2">Grade</div>
-              <div className="col-span-3 sm:col-span-2 px-4 py-2">Worst Severity</div>
+              <div className="col-span-3 sm:col-span-5 px-4 py-2">Target</div> 
+              <div className="hidden sm:block sm:col-span-2 px-4 py-2">Grade</div>
+              <div className="col-span-3 sm:col-span-2 px-4 py-2">Severity</div> 
               <div className="hidden sm:block sm:col-span-1 px-4 py-2 text-right">Findings</div>
-              <div className="col-span-3 sm:col-span-2 px-4 py-2 text-center">Save</div>
+              <div className="hidden sm:block sm:col-span-2 px-4 py-2 text-center">Save</div>
             </div>
 
             <div className="divide-y divide-[#1f1f22]">
               {recentScans.map((s, i) => (
                 <div key={i} className="grid grid-cols-6 sm:grid-cols-12 items-center hover:bg-[#15161b] transition">
-                  <div className="col-span-6 sm:col-span-5 px-4 py-3">
+                  <div className="col-span-3 sm:col-span-5 px-4 py-3">
                     <div className="text-sm truncate">{s.target}</div>
                     <div className="text-[11px] text-gray-500">Completed</div>
+                    <div className="mt-1 flex gap-2 sm:hidden">
+                        <span className={`text-xs px-2 py-[3px] rounded-md ${gradeBadge(s.result.sslGrade)}`}>{s.result.sslGrade}</span>
+                        <button type="button" className="text-[11px] bg-[#03a48c] text-[#101213] px-2 py-1 rounded hover:bg-[#029e85]" onClick={() => handleSaveSingle(s)}>Save</button>
+                    </div>
                   </div>
-                  <div className="col-span-3 sm:col-span-2 px-4 py-3">
+                  <div className="hidden sm:block sm:col-span-2 px-4 py-3">
                     <span className={`text-xs px-2 py-[3px] rounded-md ${gradeBadge(s.result.sslGrade)}`}>{s.result.sslGrade}</span>
                   </div>
                   <div className="col-span-3 sm:col-span-2 px-4 py-3">
                     <span className={`text-[11px] px-2 py-[3px] rounded-full font-semibold ${sevPill(s.result.worstSeverity)}`}>{String(s.result.worstSeverity || "info").toUpperCase()}</span>
                   </div>
                   <div className="hidden sm:block sm:col-span-1 px-4 py-3 text-right text-sm">{s.result.risks.length}</div>
-                  <div className="col-span-3 sm:col-span-2 px-4 py-3 text-center">
+                  <div className="hidden sm:block sm:col-span-2 px-4 py-3 text-center">
                     <button type="button" className="text-[11px] bg-[#03a48c] text-[#101213] px-2 py-1 rounded hover:bg-[#029e85]" onClick={() => handleSaveSingle(s)}>Save</button>
                   </div>
                 </div>
@@ -139,6 +144,7 @@ const Dashboard = () => {
         </div>
 
         <div className="col-span-12 xl:col-span-4">
+          
           <div className="rounded-xl border border-[#1f1f22] bg-[#111214] overflow-hidden">
             <div className="px-4 py-3 border-b border-[#1f1f22]">
               <div className="text-sm font-semibold">Top Risk Domains</div>
@@ -149,17 +155,17 @@ const Dashboard = () => {
               {(expandedDomain ? worstDomains : worstDomains.slice(0,2)).map((w, i) => (
                 <div key={i} className="rounded-lg border border-[#1f1f22] bg-[#0d0e12] p-3 hover:border-[#2a2b31] transition">
                   <div className="flex items-start justify-between">
-                    <div className="truncate">
+                    <div className="truncate pr-2">
                       <div className="text-sm font-medium truncate">{w.domain}</div>
                       <div className="text-[11px] text-gray-500">Subdomains: {w.meta.subdomains} • TLS1.3: {w.meta.tls13 ? "Yes" : "No"}</div>
                     </div>
-                    <span className={`text-[11px] px-2 py-[3px] rounded-full font-semibold ${sevPill(w.worst)}`}>{w.worst.toUpperCase()}</span>
+                    <span className={`text-[11px] px-2 py-[3px] rounded-full font-semibold flex-shrink-0 ${sevPill(w.worst)}`}>{w.worst.toUpperCase()}</span>
                   </div>
 
                   <div className="mt-2 space-y-1">
                     {w.issues.map((issue, idx) => (
-                      <div key={idx} className="text-xs text-gray-300 flex items-center gap-2">
-                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#2a2b31]" />
+                      <div key={idx} className="text-xs text-gray-300 flex items-start gap-2">
+                        <span className="mt-1 inline-block w-1.5 h-1.5 rounded-full bg-[#2a2b31] flex-shrink-0" />
                         {issue}
                       </div>
                     ))}
@@ -178,9 +184,9 @@ const Dashboard = () => {
               <div className="text-sm font-semibold">Hardening Tips</div>
             </div>
             <div className="p-4 text-xs text-gray-300 space-y-2">
-              <div className="flex gap-2"><span className="mt-1 inline-block w-1.5 h-1.5 rounded-full bg-[#2a2b31]" />Enable HSTS with long max-age + includeSubDomains.</div>
-              <div className="flex gap-2"><span className="mt-1 inline-block w-1.5 h-1.5 rounded-full bg-[#2a2b31]" />Add a strict Content-Security-Policy to reduce XSS.</div>
-              <div className="flex gap-2"><span className="mt-1 inline-block w-1.5 h-1.5 rounded-full bg-[#2a2b31]" />Disable weak cipher suites and prefer TLS 1.3.</div>
+              <div className="flex gap-2"><span className="mt-1 inline-block w-1.5 h-1.5 rounded-full bg-[#2a2b31] flex-shrink-0" />Enable HSTS with long max-age + includeSubDomains.</div>
+              <div className="flex gap-2"><span className="mt-1 inline-block w-1.5 h-1.5 rounded-full bg-[#2a2b31] flex-shrink-0" />Add a strict Content-Security-Policy to reduce XSS.</div>
+              <div className="flex gap-2"><span className="mt-1 inline-block w-1.5 h-1.5 rounded-full bg-[#2a2b31] flex-shrink-0" />Disable weak cipher suites and prefer TLS 1.3.</div>
             </div>
           </div>
         </div>
@@ -189,7 +195,7 @@ const Dashboard = () => {
       <div className="h-8" />
 
       {toast && (
-        <div className="fixed top-10 right-8 bg-[#03a47c] text-white px-4 py-2 rounded-md shadow-lg text-sm animate-fade-in">
+        <div className="fixed top-4 right-4 sm:top-10 sm:right-8 bg-[#03a47c] text-white px-4 py-2 rounded-md shadow-lg text-sm animate-fade-in z-50">
           {toast}
         </div>
       )}

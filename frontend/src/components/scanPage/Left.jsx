@@ -8,7 +8,7 @@ const Left = ({ hide = false }) => {
     <motion.div
       animate={ hide ? { width: 0, opacity:0 } : { width: 240, opacity:1 } }
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      className={`bg-[#0e0f13] ${hide ? "border-r-0" : "border-r border-[#1f1f22]"} flex flex-col text-gray-200 select-none overflow-hidden w-full md:w-[240px] h-screen`}
+      className={`bg-[#0e0f13] ${hide ? "border-r-0" : "border-r border-[#1f1f22]"} flex flex-col text-gray-200 select-none overflow-hidden w-full md:w-[240px] h-full`}
     >
       <div className="gap-4 flex flex-col py-6 px-4 text-gray-200 select-none">
 
