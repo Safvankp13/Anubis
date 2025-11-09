@@ -123,7 +123,8 @@ useEffect(() => {
         <div className="w-full max-w-3xl flex items-center text-gray-400 ">
           <input
             type="text"
-          placeholder="Enter a URL/Domain to scan  (ex: 'target.com' or 'https://app.company.com')"
+          placeholder="Enter a URL to scan (ex: https://www.company.com)"
+
 
             
             className=" shadow-[0_0_18px_2px_rgba(3,164,140,0.35)] focus:shadow-[0_0_25px_4px_rgba(3,164,140,0.55)] transition-shadow border w-full rounded-full text-[14px] placeholder-[#919191] border-gray-500 p-3 pr-12"
