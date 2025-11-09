@@ -154,7 +154,7 @@ const Download = () => {
                               className="text-xs bg-[#03a48c] text-[#101213] px-2 py-1 rounded"
                               onClick={() =>
                                 window.open(
-                                  `http://localhost:5000/api/scan/${scanIdForPdf}/pdf`,
+                                  `https://an-backend-842c.onrender.com/api/scan/${scanIdForPdf}/pdf`,
                                   "_blank"
                                 )
                               }
