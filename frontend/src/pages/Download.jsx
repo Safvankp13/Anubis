@@ -48,8 +48,8 @@ const Download = () => {
     <div className="flex">
       <div className="min-h-screen bg-[#0b0b0c] text-gray-100 flex-1">
         <div className="px-6 pt-8 pb-3">
-          <h1 className="text-xl font-semibold">Saved Reports</h1>
-          <p className="text-sm text-gray-500">Reports you saved from scans</p>
+          <h1 className="sm:ml-10  text-xl font-semibold">Saved Reports</h1>
+          <p className="sm:ml-10  text-sm text-gray-500">Reports you saved from scans</p>
         </div>
 
         <div className="px-6 mt-4">
