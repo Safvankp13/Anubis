@@ -28,7 +28,6 @@ const Dashboard = () => {
   const [toast, setToast] = useState(null);
   const [expandedDomain, setExpandedDomain] = useState(false);
   const { data: scans = [] } = useGetAllScanQuery(null,{
-    pollingInterval:600000,
     refetchOnFocus: true  
   });
   const [saveReport] = useSaveReportMutation();

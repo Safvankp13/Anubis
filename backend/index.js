@@ -32,7 +32,9 @@ app.get('/api/scan/:id/pdf', downloadPdf);
 app.get('/api/saved-reports',getSaveReports)
 app.post('/api/saved-reports',saveReport)
 app.delete('/api/saved-reports/:id', deleteSavedReport); 
-
+app.get('/ping', (req, res) => {
+  res.status(200).send("ok");
+});
 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
