@@ -62,10 +62,7 @@ useEffect(() => {
       }).unwrap();  
 
       
-      await saveReport({
-        scanId: savedScanDoc.data._id,
-        domain: summary.domain
-      });
+     
     }
   };
 
