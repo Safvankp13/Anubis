@@ -33,8 +33,7 @@ app.get('/api/saved-reports',getSaveReports)
 app.post('/api/saved-reports',saveReport)
 app.delete('/api/saved-reports/:id', deleteSavedReport); 
 app.get("/ping", (req, res) => {
-  res.setHeader("Content-Type", "text/plain");
-  res.send("ok");
+  res.status(200).json({ ok: true, ts: Date.now() });
 });
 
 
