@@ -13,7 +13,7 @@ app.use(cors())
 app.use(express.json({limit:'10mb'}));
 app.use(express.urlencoded({limit:'10mb', extended:true}));
 
-app.post("/ping", (req, res) => res.sendStatus(204));
+
 
 mongoose.connect( process.env.MONGO_URI ||
   'mongodb+srv://safvankp13:w5xr1zBu5IW5rMBW@learning.mdupztu.mongodb.net/Learning?retryWrites=true&w=majority&appName=Learning',
@@ -24,7 +24,7 @@ mongoose.connect( process.env.MONGO_URI ||
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-
+app.post("/ping", (req, res) => res.sendStatus(204));
 app.post('/api/scan', startScan);
 app.post('/api/save',saveDb)
 app.get('/api/allScans', getAllScans);
