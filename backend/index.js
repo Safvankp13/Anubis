@@ -13,6 +13,7 @@ app.use(cors())
 app.use(express.json({limit:'10mb'}));
 app.use(express.urlencoded({limit:'10mb', extended:true}));
 
+app.post("/ping", (req, res) => res.sendStatus(204));
 
 mongoose.connect( process.env.MONGO_URI ||
   'mongodb+srv://safvankp13:w5xr1zBu5IW5rMBW@learning.mdupztu.mongodb.net/Learning?retryWrites=true&w=majority&appName=Learning',
@@ -32,9 +33,6 @@ app.get('/api/scan/:id/pdf', downloadPdf);
 app.get('/api/saved-reports',getSaveReports)
 app.post('/api/saved-reports',saveReport)
 app.delete('/api/saved-reports/:id', deleteSavedReport); 
-app.get("/ping", (req, res) => {
-  res.status(200).json({ ok: true, ts: Date.now() });
-});
 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
