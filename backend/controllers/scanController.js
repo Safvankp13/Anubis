@@ -4,21 +4,20 @@ import PDFDocument from "pdfkit";
 import { ScanResult } from '../models/scanResult.js'
 import { SavedReport } from "../models/savedReport.js";
 
-// --- Helpers (Network and Parsing Functions) --- //
+
 
 async function fetchCrtSh(domain) {
   try {
     const q = encodeURIComponent(`%.${domain}`);
     const url = `https://crt.sh/?q=${q}&output=json`;
-    // Use axios.get for the request
     const res = await axios.get(url, { timeout: 15000 });
     
-    // Axios automatically parses JSON, so res.data is the JSON object
+    
     const json = res.data; 
     const subdomains = [...new Set(json.map(r => r.name_value).flatMap(s => s.split("\n")))];
     return { subdomains };
   } catch (e) {
-    // Axios places the response status on e.response.status if available
+
     const status = e.response ? e.response.status : e.code;
     return { error: `crt.sh request failed: ${status || e.message}` };
   }
@@ -47,7 +46,6 @@ async function fetchSslLabs(domain) {
 async function fetchUrlScan(url, apiKey) {
   try {
     if (!apiKey) {
-      // fallback to urlscan search (limited)
     
      return
     } else {
@@ -64,13 +62,12 @@ async function fetchUrlScan(url, apiKey) {
         await new Promise(s => setTimeout(s, 3000));
         try {
           const r = await axios.get(resultUrl);
-          // If the status is 200, it means the job is done
+         
           return r.data;
         } catch (e) {
-          // If the job is pending, it returns a non-2xx status (like 404), which is caught here.
-          // We check the error response status to continue polling.
+         
           if (e.response && e.response.status !== 404) {
-             throw e; // Re-throw other errors
+             throw e;
           }
         }
       }
@@ -84,10 +81,9 @@ async function fetchUrlScan(url, apiKey) {
 
 async function inspectPage(url) {
   try {
-    // Axios automatically handles redirects by default
     const res = await axios.get(url, { timeout: 15000, maxContentLength: 50 * 1024 * 1024 }); 
     
-    // Headers are accessed via res.headers (already lowercase by default in Axios)
+  
     const headers = {};
     for (const k in res.headers) {
         headers[k] = res.headers[k];
@@ -95,10 +91,10 @@ async function inspectPage(url) {
     
     const contentType = headers["content-type"] || "";
     let html = "";
-    // res.data contains the response body
+   
     if (contentType.includes("text/html")) html = res.data;
 
-    const findings = { status: res.status, headers }; // res.status is the HTTP status code
+    const findings = { status: res.status, headers }; 
     
     if (html) {
       const $ = cheerio.load(html);
@@ -144,7 +140,7 @@ function buildRisks(data) {
 }
 
 
-// --- Optional third-party tech detection wrappers --- //
+
 
 async function fetchBuiltWith(domain, apiKey) {
   if (!apiKey) return { skipped: "no builtwith api key" };
@@ -160,7 +156,7 @@ async function fetchBuiltWith(domain, apiKey) {
 
 
 
-// --- Controller handlers --- //
+
 
 export const startScan = async (req, res) => {
   try {
@@ -180,7 +176,7 @@ export const startScan = async (req, res) => {
         targetUrl = `https://${targetDomain}/`;
     }
 
-    // --- Concurrent Requests ---
+  
     const [
       crtsh,
       home,
