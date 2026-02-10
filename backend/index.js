@@ -15,7 +15,7 @@ app.use(express.urlencoded({limit:'10mb', extended:true}));
 
 
 mongoose.connect( process.env.MONGO_URI ||
-  'mongodb+srv://safvankp13:w5xr1zBu5IW5rMBW@learning.mdupztu.mongodb.net/Learning?retryWrites=true&w=majority&appName=Learning',
+  'mongodb+srv://safvankp13:safvankp13@learning.mdupztu.mongodb.net/Learning?retryWrites=true&w=majority&appName=Learning',
   {
     dbName: "Learning"
   }
